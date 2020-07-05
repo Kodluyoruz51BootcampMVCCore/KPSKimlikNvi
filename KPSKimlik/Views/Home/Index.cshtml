@@ -1,0 +1,70 @@
+﻿<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="~/css/site.css" rel="stylesheet" />
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container register-form">
+    <div class="form">
+        <div class="note">
+            <p><strong>Kodluyoruz</strong> için Hüseyin Karacif tarafından &#128150; ile hazırlandı.</p>
+        </div>
+
+        <div class="form-content">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="password" id="TCKimlikNo" class="form-control" placeholder="TC Kimlik Numarası" value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="DogumYil" class="form-control" placeholder="Doğum Yılı" value="" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" id="Ad" class="form-control" placeholder="Ad" value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text"  id="Soyad"  class="form-control" placeholder="Soyad" value="" />
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:center">
+                <button type="button" id="btnSubmit" class="btnSubmit">Kontrol Et</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script>
+    $("#btnSubmit").click(function () {
+        var vatandas = {
+            ad: $("#Ad").val(),
+            soyad: $("#Soyad").val(),
+            tcKimlikNo: $("#TCKimlikNo").val(),
+            dogumYili: $("#DogumYil").val()
+        };
+        $.ajax({
+            url: '/api/kps/kimlikdogrula',
+            type: 'GET',
+            data: vatandas,
+            contentType: 'application/json; charset=UTF-8',
+            success: function (response) {
+                console.log(response);
+                if (response == 'true') {
+                    Swal.fire(
+                        'Vatandaş Doğrulandı',
+                        'Girdiğiniz Bilgiler ile eşleşen kayıt bulunuyor.',
+                        'success'
+                    );
+                } else {
+                    Swal.fire(
+                        'Vatandaş Doğrulanamadı',
+                        'Girdiğiniz Bilgiler ile eşleşen kayıt bulunamadı.',
+                        'error'
+                    );
+                }
+            }
+        });
+    });
+</script>
