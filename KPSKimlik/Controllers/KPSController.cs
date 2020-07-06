@@ -16,7 +16,7 @@ namespace KPSKimlik.Controllers
     public class KPSController : ControllerBase
     {
         [HttpGet]
-        [Route("kimlikdogrul1a")]
+        [Route("kimlikdogrula")]
         public async Task<IActionResult> Get(string tcKimlikNo,string ad,string soyad,string dogumYili)    // GET isteği çalışıyor
         {
             KPSPublicSoapClient servis = new KPSPublicSoapClient(KPSPublicSoapClient.EndpointConfiguration.KPSPublicSoap);

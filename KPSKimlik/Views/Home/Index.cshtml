@@ -40,18 +40,16 @@
     $("#btnSubmit").click(function () {
         
         var vatandas = {
-            
+            Ad: $("#Ad").val(),
+            Soyad: $("#Soyad").val(),
+            TCKimlikNo: $("#TCKimlikNo").val(),
+            DogumYili: $("#DogumYil").val()
         }
 
         $.ajax({
             url: '/api/kps/kimlikdogrula',
             type: 'POST',
-            data: JSON.stringify({
-                Ad: $("#Ad").val(),
-                Soyad: $("#Soyad").val(),
-                TCKimlikNo: $("#TCKimlikNo").val(),
-                DogumYili: $("#DogumYil").val()
-            }),
+            data: JSON.stringify(vatandas),
             contentType: 'application/json',
             //contentType: 'application/json; charset=UTF-8',
             //dataType: 'json',
