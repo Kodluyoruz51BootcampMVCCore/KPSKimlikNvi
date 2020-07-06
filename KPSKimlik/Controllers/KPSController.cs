@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using KPSKimlik.Models;
 using Microsoft.AspNetCore.Http;
@@ -15,7 +16,7 @@ namespace KPSKimlik.Controllers
     public class KPSController : ControllerBase
     {
         [HttpGet]
-        [Route("kimlikdogrula")]
+        [Route("kimlikdogrul1a")]
         public async Task<IActionResult> Get(string tcKimlikNo,string ad,string soyad,string dogumYili)    // GET isteği çalışıyor
         {
             KPSPublicSoapClient servis = new KPSPublicSoapClient(KPSPublicSoapClient.EndpointConfiguration.KPSPublicSoap);
@@ -25,8 +26,11 @@ namespace KPSKimlik.Controllers
 
         [HttpPost]
         [Route("kimlikdogrula")]
-        public async Task<IActionResult> Post([FromBody]Vatandas vatandas)       // POST bad requeste düşüyor
+        public async Task<IActionResult> Post([FromBody]object vatandasJson)       // POST bad requeste düşüyor
         {
+            Vatandas vatandas = JsonConvert.DeserializeObject<Vatandas>(vatandasJson.ToString());
+            //Vatandas vatandas = System.Text.Json.JsonSerializer.Deserialize<Vatandas>(vatandasx.ToString());
+            
             KPSPublicSoapClient servis = new KPSPublicSoapClient(KPSPublicSoapClient.EndpointConfiguration.KPSPublicSoap);
             var sonuc = await servis.TCKimlikNoDogrulaAsync(vatandas.TCKimlikNo, vatandas.Ad, vatandas.Soyad, vatandas.DogumYili);
             return Ok(JsonConvert.SerializeObject(sonuc.Body.TCKimlikNoDogrulaResult));
