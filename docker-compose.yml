@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  kpskimlik:
+    image: ${DOCKER_REGISTRY-}kpskimlik
+    build:
+      context: .
+      dockerfile: KPSKimlik/Dockerfile
